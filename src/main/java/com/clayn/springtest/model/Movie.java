@@ -1,6 +1,7 @@
 package com.clayn.springtest.model;
 
 import com.clayn.springtest.validation.UniqueMovieTitle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import javax.validation.constraints.Positive;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
     @Column(nullable = false)
     @NotBlank
@@ -25,4 +27,8 @@ public class Movie {
     private String description;
     @Positive
     private int duration;
+
+    @ManyToOne(targetEntity = Director.class, optional = false, cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    private Director director;
 }

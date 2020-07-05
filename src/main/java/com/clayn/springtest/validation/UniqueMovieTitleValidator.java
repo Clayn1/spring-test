@@ -13,6 +13,7 @@ public class UniqueMovieTitleValidator implements ConstraintValidator<UniqueMovi
 
    @Override
    public boolean isValid(String title, ConstraintValidatorContext context) {
-      return  (title != null && movieRepository.findMovieByTitle(title) == null);
+      return true;
+      // return  (title != null && movieRepository.findMovieByTitle(title) == null);
    }
 }
