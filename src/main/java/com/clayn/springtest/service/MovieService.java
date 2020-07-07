@@ -1,15 +1,16 @@
 package com.clayn.springtest.service;
 
+import com.clayn.springtest.dtos.MovieDTO;
 import com.clayn.springtest.model.Movie;
 import com.clayn.springtest.repository.DirectorRepository;
 import com.clayn.springtest.repository.MovieRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -44,7 +45,14 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public MovieDTO getMovies(PageRequest pageRequest) {
+        Page<Movie> moviePages = movieRepository.findAll(pageRequest);
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setMovies(moviePages.getContent());
+        movieDTO.setEmpty(moviePages.isEmpty());
+        movieDTO.setLast(moviePages.isLast());
+        movieDTO.setPagesCount(moviePages.getTotalPages());
+        movieDTO.setTotalElements(moviePages.getNumberOfElements());
+        return movieDTO;
     }
 }

@@ -1,8 +1,8 @@
 package com.clayn.springtest.service;
 
+import com.clayn.springtest.dtos.MovieDTO;
 import com.clayn.springtest.model.Movie;
-
-import java.util.List;
+import org.springframework.data.domain.PageRequest;
 
 public interface IMovieService {
     Movie insertMovie(Movie movie, Integer directorId);
@@ -11,6 +11,6 @@ public interface IMovieService {
 
     void deleteMovie(Integer id);
 
-    List<Movie> getAllMovies();
+    MovieDTO getMovies(PageRequest pageRequest);
 
 }

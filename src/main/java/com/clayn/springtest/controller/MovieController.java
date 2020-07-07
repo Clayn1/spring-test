@@ -1,9 +1,12 @@
 package com.clayn.springtest.controller;
 
+import com.clayn.springtest.dtos.MovieDTO;
 import com.clayn.springtest.model.Movie;
 import com.clayn.springtest.service.IMovieService;
 import com.clayn.springtest.validation.MovieValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +24,9 @@ public class MovieController {
     private MovieValidator movieValidator;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Movie> getMovies(){
-        return movieService.getAllMovies();
+    public MovieDTO getMovies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return movieService.getMovies(pageRequest);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{directorId}")
